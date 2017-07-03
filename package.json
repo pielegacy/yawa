@@ -1,0 +1,11 @@
+{
+  "name": "yawa",
+  "version": "1.0.0",
+  "description": "Yet another weather app, created by Alex Billson for Interface Design and Development",
+  "main": "js/index.js",
+  "author": "Alex Billson",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/angular": "^1.6.25"
+  }
+}

@@ -1,0 +1,26 @@
+<form action="#" method="GET" data-ng-submit="submitWeather($event)">
+    <div class="row form-group form-group-lg">
+        <!--<label for="input-search" class="col-xs-2 col-form-label">Search by City, PostCode or Coordinates</label>-->
+        <div "col-xs-12">
+            <input id="input-search" data-ng-model="search" data-ng-change="updateOptions()" class="form-control" type="text" autocomplete="off"
+                placeholder="Search by City or Postcode" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 form-group form-group-md" data-ng-show="!weatherFound">
+            <input type="button" class="form-control" value="{{options.city.message}}" data-ng-show="options.city.visible" data-ng-click="applySearch('city')"
+            />
+            <input type="button" class="form-control" value="{{options.postcode.message}}" data-ng-show="options.postcode.visible" data-ng-click="applySearch('postcode')"
+            />
+            <input type="button" class="form-control" value="{{options.coords.message}}" data-ng-show="options.coords.visible" data-ng-click="applySearch('coords')"
+            />
+        </div>
+    </div>
+    <div class="row" data-ng-show="weatherFound">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div data-yawa-search-result data-source="{{weatherResult}}" />
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</form>

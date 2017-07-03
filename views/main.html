@@ -1,0 +1,124 @@
+<!--The "Home Page" View-->
+<section class="row">
+    <aside class="col-sm-4 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2 class="card-title">Pinned Locations</h2>
+                <!--Pinned Weather Locations-->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <ul class="list-group">
+                                    <li class="list-pinned-item list-group-item" data-ng-repeat="p in pinnedWeatherList" data-ng-class="{active : p.Home == true}"
+                                        data-ng-click="selectHome(p.Name)">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <p class="pin-label" title="{{p.Location}}">{{p.Name}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <p>{{p.Data.main.temp}}°C ({{p.Data.main.temp_min}}/{{p.Data.main.temp_max}}°C)
+                                                    <button class="btn btn-danger" data-ng-click="removePin($index)" title="Remove {{p.Name}} from Pinned?" data-ng-show="isEditingPins === true"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button data-ng-click="promptAddPin()" class="btn btn-primary">{{addPinButtonMessage}}</button>
+                                        <button id="remove-pinned" class="btn btn-info" data-ng-show="!firstTime" data-ng-click="changePinEditStatus()">Edit Pinned</button>
+                                    </div>
+                                </div>
+                                <div class="row" data-ng-show="isPinning">
+                                    <div class="col-xs-12">
+                                        <h4>New Pinned</h4>
+                                        <form name="newPinForm" action="#" method="GET">
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="text" id="name" name="name" data-ng-required="required" class="form-control input-xs" data-ng-model="newPin.Name" data-ng-pattern="/^(\D)+$/"
+                                                    placeholder="Example Name" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="location">Location</label>
+                                                <input type="text" id="location" name="location" class="form-control input-xs" data-ng-required="required" data-ng-model="newPin.Location"
+                                                    data-ng-pattern="/^(\D)+$/" placeholder="Example, AU" />
+                                            </div>
+                                            <input data-ng-disabled="newPinForm.$invalid || newPin === undefined || newPin.Name === '' || newPin.Location === ''" type="button" class="btn btn-success" data-ng-click="addPinned()" value="Add Pinned Location"
+                                            />
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!--Current "Main" Content-->
+    <div class="col-sm-8 col-xs-12">
+        <div class="panel panel-default" data-ng-show="firstTime">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3>Welcome to YAWA</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--The hand changes direction depending on width of screen-->
+                    <div class="col-xs-12 hidden-xs">
+                        <p class="welcome-message"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Maybe add a pinned place?</p>
+                    </div>
+                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+                        <p class="welcome-message"><i class="fa fa-hand-o-up" aria-hidden="true"></i> Maybe add a pinned place?</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input type="button" class="btn btn-info" data-ng-click="pinLocalWeather()" value="Add Current Location" />
+                        <i>Please note, this feature may not work in Chrome due to security issues using GeoLocation</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 panel panel-default" data-ng-show="!firstTime">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="card-title">Today's Weather</h3>
+                        <h1>{{weatherMessage}} <span id="weather-icon" class="fa {{mainWeatherObj.ConditionIcon}}" aria-hidden="true"></span></h1>
+                        <p class="label-location">{{mainWeatherObj.Location}}</p>
+                        <h2>{{weatherObj.main.temp_min}}/{{weatherObj.main.temp_max}}°C</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="card-title">Forecast</h3>
+                        <ul class="list-group">
+                            <li data-ng-repeat="f in homeForecast" class="list-group-item">
+                                <b>{{f.dt_txt}}</b>
+                                <p class="forecast-temp">
+                                    <span class="fa {{f.ConditionIcon}}" aria-hidden="true"></span> {{f.main.temp_min}}/{{f.main.temp_max}}°C
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <button class="btn btn-default btn-block" data-ng-click="increaseHomeRange()">Load More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
